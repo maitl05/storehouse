@@ -8,9 +8,6 @@
   <component name="ChangeListManager">
     <list default="true" id="ec7340a1-4eb4-45dd-a40f-5706c579e176" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/maitl/model/common/ConnectionPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/maitl/model/common/ConnectionPool.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/maitl/model/entity/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/maitl/model/entity/Product.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/maitl/model/entity/SalesList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/maitl/model/entity/SalesList.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/maitl/model/repository/ProductDataAccess.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/maitl/model/repository/ProductDataAccess.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -35,10 +32,27 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/maitl/model/entity/SalesList.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="250">
+              <caret line="10" selection-start-line="10" selection-end-line="10" />
+              <folding>
+                <element signature="e#197#198#0" expanded="true" />
+                <element signature="e#229#230#0" expanded="true" />
+                <element signature="e#379#380#0" expanded="true" />
+                <element signature="e#411#412#0" expanded="true" />
+                <element signature="e#565#566#0" expanded="true" />
+                <element signature="e#601#602#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/maitl/model/entity/Product.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
-              <caret line="21" column="5" lean-forward="true" selection-start-line="21" selection-start-column="5" selection-end-line="21" selection-end-column="5" />
+            <state relative-caret-position="575">
+              <caret line="23" column="29" selection-start-line="23" selection-start-column="29" selection-end-line="23" selection-end-column="29" />
               <folding>
                 <element signature="e#306#307#0" expanded="true" />
                 <element signature="e#338#339#0" expanded="true" />
@@ -52,23 +66,6 @@
                 <element signature="e#1248#1249#0" expanded="true" />
                 <element signature="e#1396#1397#0" expanded="true" />
                 <element signature="e#1424#1425#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/maitl/model/entity/SalesList.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="250">
-              <caret line="10" selection-start-line="10" selection-end-line="10" />
-              <folding>
-                <element signature="e#197#198#0" expanded="true" />
-                <element signature="e#229#230#0" expanded="true" />
-                <element signature="e#379#380#0" expanded="true" />
-                <element signature="e#411#412#0" expanded="true" />
-                <element signature="e#565#566#0" expanded="true" />
-                <element signature="e#601#602#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -89,8 +86,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/maitl/model/repository/ProductDataAccess.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="400">
-              <caret line="16" column="5" lean-forward="true" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
+            <state relative-caret-position="450">
+              <caret line="81" column="57" selection-start-line="81" selection-start-column="57" selection-end-line="81" selection-end-column="57" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -101,8 +98,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/maitl/model/repository/SalesListDataAccess.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="100">
-              <caret line="4" selection-start-line="4" selection-end-line="4" />
+            <state relative-caret-position="50">
+              <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -163,11 +160,10 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="-12" />
-    <option name="y" value="4" />
-    <option name="width" value="2732" />
-    <option name="height" value="2062" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="1910" />
+    <option name="width" value="1942" />
+    <option name="height" value="2112" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -354,7 +350,7 @@
       <workItem from="1571003969724" duration="1648000" />
       <workItem from="1571005659322" duration="1831000" />
       <workItem from="1571007736279" duration="1298000" />
-      <workItem from="1571090054432" duration="3508000" />
+      <workItem from="1571090054432" duration="9866000" />
     </task>
     <task id="LOCAL-00001" summary="state 0">
       <created>1571005970378</created>
@@ -370,17 +366,31 @@
       <option name="project" value="LOCAL" />
       <updated>1571008274076</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="kir to gihub tokhmie to alan gayidi maro">
+      <created>1571264439782</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1571264439782</updated>
+    </task>
+    <task id="LOCAL-00004" summary="product insert is implemented &#10;hopfully it's correct&#10;idk">
+      <created>1571266739308</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1571266739308</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8285000" />
+    <option name="totallyTimeSpent" value="14643000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-6" y="2" width="1366" height="1031" extended-state="0" />
+    <frame x="-6" y="-6" width="1933" height="1063" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2614679" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1168" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -419,7 +429,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="state 0" />
-    <option name="LAST_COMMIT_MESSAGE" value="state 0" />
+    <MESSAGE value="kir to gihub tokhmie to alan gayidi maro" />
+    <MESSAGE value="product insert is implemented &#10;hopfully it's correct&#10;idk" />
+    <option name="LAST_COMMIT_MESSAGE" value="product insert is implemented &#10;hopfully it's correct&#10;idk" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/maitl/view/Calc.java" />
@@ -427,13 +439,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="175">
           <caret line="7" selection-start-line="7" selection-end-line="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/maitl/model/repository/SalesListDataAccess.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="4" selection-start-line="4" selection-end-line="4" />
         </state>
       </provider>
     </entry>
@@ -461,6 +466,23 @@
     <entry file="file://$PROJECT_DIR$/web/WEB-INF/web.xml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/maitl/model/repository/SalesListDataAccess.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="50">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/maitl/model/common/ConnectionPool.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/maitl/model/entity/SalesList.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="250">
@@ -478,8 +500,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/maitl/model/entity/Product.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="21" column="5" lean-forward="true" selection-start-line="21" selection-start-column="5" selection-end-line="21" selection-end-column="5" />
+        <state relative-caret-position="575">
+          <caret line="23" column="29" selection-start-line="23" selection-start-column="29" selection-end-line="23" selection-end-column="29" />
           <folding>
             <element signature="e#306#307#0" expanded="true" />
             <element signature="e#338#339#0" expanded="true" />
@@ -497,20 +519,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/maitl/model/common/ConnectionPool.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="15" selection-start-line="15" selection-end-line="15" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/maitl/model/repository/ProductDataAccess.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="16" column="5" lean-forward="true" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
+        <state relative-caret-position="450">
+          <caret line="81" column="57" selection-start-line="81" selection-start-column="57" selection-end-line="81" selection-end-column="57" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
