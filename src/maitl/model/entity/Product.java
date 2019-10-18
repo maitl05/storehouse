@@ -3,12 +3,12 @@ package maitl.model.entity;
 import java.sql.Date;
 
 public class Product {
-    private long productID;
+    private long productID = -1;
     private String productName;
     private String productCategory;
-    private long productQuantityAvailableInStore;
+    private long productQuantityAvailableInStore = -1;
     private Date importDate;
-    private long price;
+    private long price = -1;
 
     public Product(){}
 
