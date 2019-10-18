@@ -1,6 +1,8 @@
 package maitl.model.repository;
 
 
+import com.sun.prism.impl.ManagedResource;
+import jdk.nashorn.internal.runtime.ECMAException;
 import maitl.model.common.ConnectionPool;
 import maitl.model.entity.Product;
 import org.json.simple.JSONArray;
@@ -12,15 +14,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class ProductDataAccess implements AutoCloseable {
-    Connection connection;
-    PreparedStatement preparedStatement;
+    private Connection connection;
+    private PreparedStatement preparedStatement;
 
     public ProductDataAccess() throws Exception{
         connection = ConnectionPool.getConnection();
         connection.setAutoCommit(false);
 
     }
-    //delete update
+
     public void insertProduct(Product product) throws Exception{
         preparedStatement = connection.prepareStatement("select product.nextval nid form dual");
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -49,7 +51,7 @@ public class ProductDataAccess implements AutoCloseable {
         return jsonArray.toJSONString();
     }
 
-    public String selectOneProduct(Long productID) throws Exception{
+    public String selectOneProduct(long productID) throws Exception{
         preparedStatement = connection.prepareStatement("select * from product where product_id = ?");
         preparedStatement.setLong(1, productID);
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -69,11 +71,18 @@ public class ProductDataAccess implements AutoCloseable {
         return jsonObject;
     }
 
-    public void updateProduct(Product product) throws Exception{
-        preparedStatement  = connection.prepareStatement("update product set price = ?, product_quantity_available_in_store = ? where product_id=?");
+    public void updateProductPrice(Product product) throws Exception{
+        preparedStatement  = connection.prepareStatement("update product set price = ? where product_id=?");
         preparedStatement.setLong(1, product.getPrice());
-        preparedStatement.setLong(2,product.getProductQuantityAvailableInStore());
-        preparedStatement.setLong(3,product.getProductID());
+        preparedStatement.setLong(2, product.getProductID());
+        preparedStatement.executeUpdate();
+
+    }
+
+    public void updateProductQuantity(Product product) throws Exception{
+        preparedStatement = connection.prepareStatement("update product set product_quantity_available_in_store = ? where product_id = ?");
+        preparedStatement.setLong(1,product.getProductQuantityAvailableInStore());
+        preparedStatement.setLong(2, product.getProductID());
         preparedStatement.executeUpdate();
 
     }
