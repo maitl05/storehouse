@@ -42,8 +42,11 @@ public class SalesListDataAccess implements AutoCloseable {
         preparedStatement = connection.prepareStatement("select * from sales_list where product_id=?");
         preparedStatement.setLong(1,productID);
         ResultSet resultSet = preparedStatement.executeQuery();
-        resultSet.next();
-        return one(resultSet).toJSONString();
+        JSONArray jsonArray = new JSONArray();
+        while (resultSet.next()) {
+            jsonArray.add(one(resultSet));
+        }
+        return jsonArray.toJSONString();
     }
 
     private JSONObject one (ResultSet resultSet) throws Exception {
