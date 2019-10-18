@@ -33,11 +33,7 @@ public class SalesListDataAccess implements AutoCloseable {
         ResultSet resultSet = preparedStatement.executeQuery();
         JSONArray jsonArray = new JSONArray();
         while (resultSet.next()) {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("productID", resultSet.getString("product_id"));
-            jsonObject.put("salesDate", resultSet.getString("sales_date"));
-            jsonObject.put("salesQuantity", resultSet.getString("sales_quantity"));
-            jsonArray.add(jsonObject);
+            jsonArray.add(one(resultSet));
         }
         return jsonArray.toJSONString();
     }
@@ -47,11 +43,15 @@ public class SalesListDataAccess implements AutoCloseable {
         preparedStatement.setLong(1,productID);
         ResultSet resultSet = preparedStatement.executeQuery();
         resultSet.next();
+        return one(resultSet).toJSONString();
+    }
+
+    private JSONObject one (ResultSet resultSet) throws Exception {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("productID", resultSet.getString("product_id"));
         jsonObject.put("salesDate", resultSet.getString("sales_date"));
         jsonObject.put("salesQuantity", resultSet.getString("sales_quantity"));
-        return jsonObject.toJSONString();
+        return jsonObject;
     }
 
     @Override
