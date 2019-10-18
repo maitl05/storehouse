@@ -22,10 +22,10 @@ public class ProductDataAccess implements AutoCloseable {
     }
 
     public void insertProduct(Product product) throws Exception{
-        preparedStatement = connection.prepareStatement("select product.nextval nid form dual");
-        ResultSet resultSet = preparedStatement.executeQuery();
-        resultSet.next();
-        product.setProductID(resultSet.getLong("nid"));
+//        preparedStatement = connection.prepareStatement("select product.nextval nid form dual");
+//        ResultSet resultSet = preparedStatement.executeQuery();
+//        resultSet.next();
+//        product.setProductID(resultSet.getLong("nid"));
         product.setImportDate(new Date(System.currentTimeMillis()));
         preparedStatement = connection.prepareStatement("insert into product (product_id, import_date, product_name, product_category, price, product_quantity) values (?,?,?,?,?,?)");
         preparedStatement.setLong(1 , product.getProductID());
