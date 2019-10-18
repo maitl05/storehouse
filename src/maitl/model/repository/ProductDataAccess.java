@@ -27,7 +27,7 @@ public class ProductDataAccess implements AutoCloseable {
         resultSet.next();
         product.setProductID(resultSet.getLong("nid"));
         product.setImportDate(new Date(System.currentTimeMillis()));
-        preparedStatement = connection.prepareStatement("insert into product (product_id, import_date, product_name, product_category, price, product_quantity_available_in_store) values (?,?,?,?,?,?)");
+        preparedStatement = connection.prepareStatement("insert into product (product_id, import_date, product_name, product_category, price, product_quantity) values (?,?,?,?,?,?)");
         preparedStatement.setLong(1 , product.getProductID());
         preparedStatement.setDate(2,product.getImportDate());
         preparedStatement.setString(3,product.getProductName());
@@ -65,7 +65,7 @@ public class ProductDataAccess implements AutoCloseable {
         jsonObject.put("productName", resultSet.getString("product_name"));
         jsonObject.put("productCategory", resultSet.getString("product_category"));
         jsonObject.put("price", resultSet.getLong("price"));
-        jsonObject.put("ProductQuantityAvailableInStore",resultSet.getLong("product_quantity_available_in_store"));
+        jsonObject.put("ProductQuantityAvailableInStore",resultSet.getLong("product_quantity"));
         return jsonObject;
     }
 
@@ -77,7 +77,7 @@ public class ProductDataAccess implements AutoCloseable {
             preparedStatement.executeUpdate();
         }
         if (product.getProductQuantityAvailableInStore() != -1){
-            preparedStatement = connection.prepareStatement("update product set product_quantity_available_in_store = ? where product_id = ?");
+            preparedStatement = connection.prepareStatement("update product set product_quantity = ? where product_id = ?");
             preparedStatement.setLong(1,product.getProductQuantityAvailableInStore());
             preparedStatement.setLong(2, product.getProductID());
             preparedStatement.executeUpdate();
