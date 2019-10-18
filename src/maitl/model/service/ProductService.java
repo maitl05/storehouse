@@ -24,14 +24,14 @@ public class ProductService {
 
     public void changeProductPrice(Product product) throws Exception{
         try(ProductDataAccess productDataAccess = new ProductDataAccess()){
-            productDataAccess.updateProductPrice(product);
+            productDataAccess.updateProduct(product);
 
         }
     }
 
     public void changeProductQuantity(Product product) throws Exception{
         try(ProductDataAccess productDataAccess = new ProductDataAccess()){
-            productDataAccess.updateProductQuantity(product);
+            productDataAccess.updateProduct(product);
 
         }
     }

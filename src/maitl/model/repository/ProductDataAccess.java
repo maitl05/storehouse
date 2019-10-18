@@ -1,8 +1,6 @@
 package maitl.model.repository;
 
 
-import com.sun.prism.impl.ManagedResource;
-import jdk.nashorn.internal.runtime.ECMAException;
 import maitl.model.common.ConnectionPool;
 import maitl.model.entity.Product;
 import org.json.simple.JSONArray;
@@ -71,20 +69,19 @@ public class ProductDataAccess implements AutoCloseable {
         return jsonObject;
     }
 
-    public void updateProductPrice(Product product) throws Exception{
-        preparedStatement  = connection.prepareStatement("update product set price = ? where product_id=?");
-        preparedStatement.setLong(1, product.getPrice());
-        preparedStatement.setLong(2, product.getProductID());
-        preparedStatement.executeUpdate();
-
-    }
-
-    public void updateProductQuantity(Product product) throws Exception{
-        preparedStatement = connection.prepareStatement("update product set product_quantity_available_in_store = ? where product_id = ?");
-        preparedStatement.setLong(1,product.getProductQuantityAvailableInStore());
-        preparedStatement.setLong(2, product.getProductID());
-        preparedStatement.executeUpdate();
-
+    public void updateProduct(Product product) throws Exception{
+        if (product.getPrice() != -1){
+            preparedStatement  = connection.prepareStatement("update product set price = ? where product_id=?");
+            preparedStatement.setLong(1, product.getPrice());
+            preparedStatement.setLong(2, product.getProductID());
+            preparedStatement.executeUpdate();
+        }
+        if (product.getProductQuantityAvailableInStore() != -1){
+            preparedStatement = connection.prepareStatement("update product set product_quantity_available_in_store = ? where product_id = ?");
+            preparedStatement.setLong(1,product.getProductQuantityAvailableInStore());
+            preparedStatement.setLong(2, product.getProductID());
+            preparedStatement.executeUpdate();
+        }
     }
 
     public void deleteProduct(long productID)throws Exception{
