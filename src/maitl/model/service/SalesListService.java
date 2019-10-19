@@ -23,7 +23,7 @@ public class SalesListService {
     }
 
     public void saveSale(SalesList salesList) throws Exception{
-        try(SalesListDataAccess salesListDataAccess = new SalesListDataAccess())
+        try(SalesListDataAccess salesListDataAccess = new SalesListDataAccess(); ProductDataAccess productDataAccess = new ProductDataAccess())
         {
             String stringProduct = ProductService.getProductServiceInstance().showOneProduct(salesList.getProductID());
             JSONParser parser = new JSONParser();
@@ -34,7 +34,6 @@ public class SalesListService {
                 throw new notEnoughProductAvailable();
             }
             Product product = new Product().setProductID(salesList.getProductID()).setProductQuantityAvailableInStore(productQuantity - salesList.getSalesQuantity());
-            ProductDataAccess productDataAccess = new ProductDataAccess();
             productDataAccess.updateProduct(product);
             salesListDataAccess.insertSalesList(salesList);
         }
