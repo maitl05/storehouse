@@ -2,6 +2,8 @@ package maitl.controller.rest;
 
 import maitl.model.entity.Product;
 import maitl.model.entity.SalesList;
+import maitl.model.repository.NotEnoughProductAvailableException;
+import maitl.model.repository.ProductNotFoundException;
 import maitl.model.service.*;
 import org.json.JSONArray;
 import org.json.JSONObject;

@@ -1,4 +1,4 @@
-package maitl.model.service;
+package maitl.model.repository;
 
 public class ProductNotFoundException extends Exception {
     public ProductNotFoundException(){
