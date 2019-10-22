@@ -48,10 +48,14 @@ public class ProductService {
             }
         }
     }
-    public String showAllProduct( ) throws SQLException {
+    public String showAllProduct( ) throws SQLException, JSONException, ProductNotFoundException {
         try (ProductDataAccess productDataAccess = new ProductDataAccess()) {
-            return productDataAccess.selectAllProduct();
-
+            String res = productDataAccess.selectAllProduct();
+            if (res == null){
+                throw new ProductNotFoundException();
+            } else {
+                return res;
+            }
         }
     }
     public String showOneProduct(long productID ) throws SQLException, JSONException, ProductNotFoundException {
@@ -64,7 +68,6 @@ public class ProductService {
             }
         }
     }
-
 
 
 
