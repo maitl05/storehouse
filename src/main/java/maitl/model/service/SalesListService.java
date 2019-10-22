@@ -21,28 +21,37 @@ public class SalesListService {
     public void saveSale(SalesList salesList) throws SQLException, JSONException, ProductNotFoundException, NotEnoughProductAvailableException {
         try(SalesListDataAccess salesListDataAccess = new SalesListDataAccess(); ProductDataAccess productDataAccess = new ProductDataAccess())
         {
-            String stringProduct = ProductService.getProductServiceInstance().showOneProduct(salesList.getProductID());
-            JSONObject jsonProduct = new JSONObject(stringProduct);
+            JSONObject jsonProduct = new JSONObject(ProductService.getProductServiceInstance().showOneProduct(salesList.getProductID()));
             long productQuantity = Long.parseLong(jsonProduct.get("ProductQuantityAvailableInStore").toString());
 
             if(productQuantity < salesList.getSalesQuantity()){
                 throw new NotEnoughProductAvailableException();
+            } else {
+                productDataAccess.updateProduct(new Product().setProductID(salesList.getProductID()).setProductQuantityAvailableInStore(productQuantity - salesList.getSalesQuantity()));
+                salesListDataAccess.insertSalesList(salesList);
             }
-            Product product = new Product().setProductID(salesList.getProductID()).setProductQuantityAvailableInStore(productQuantity - salesList.getSalesQuantity());
-            productDataAccess.updateProduct(product);
-            salesListDataAccess.insertSalesList(salesList);
         }
     }
 
-    public String showAllSale()throws SQLException, JSONException{
+    public String showAllSale()throws SQLException, JSONException, SaleListNotFound{
         try(SalesListDataAccess salesListDataAccess = new SalesListDataAccess()){
-            return salesListDataAccess.selectAllSalesList();
+            String res = salesListDataAccess.selectAllSalesList();
+            if (res == null){
+                throw new SaleListNotFound();
+            } else {
+                return res;
+            }
         }
     }
 
-    public  String showOneProductSale(long productID) throws SQLException, JSONException {
+    public  String showOneProductSale(long productID) throws SQLException, JSONException, SaleListNotFound{
         try(SalesListDataAccess salesListDataAccess = new SalesListDataAccess()){
-            return salesListDataAccess.selectOneProductFromSalesList(productID);
+            String res = salesListDataAccess.selectOneProductFromSalesList(productID);
+            if (res == null){
+                throw new SaleListNotFound(productID);
+            } else {
+                return res;
+            }
         }
     }
 
