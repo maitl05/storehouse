@@ -42,7 +42,7 @@ public class Controller {
         try {
             ProductService.getProductServiceInstance().deleteProduct(Long.parseLong(productId));
             return Response.ok().build();
-        } catch (java.lang.NumberFormatException e) {
+        } catch (ProductNotFoundException | java.lang.NumberFormatException e) {
             return Response.notAcceptable(new ArrayList<>()).build();
         }
     }
@@ -58,7 +58,7 @@ public class Controller {
     public String productSearch(@QueryParam("prod-id") String productId) throws Exception {
         try {
             return (new JSONObject(ProductService.getProductServiceInstance().showOneProduct(Long.parseLong(productId)))).toString(INDENT_SIZE);
-        } catch (java.lang.NumberFormatException e) {
+        } catch (ProductNotFoundException | java.lang.NumberFormatException e) {
             return (new JSONObject()).toString();
 //            return Response.notAcceptable(new ArrayList<>()).build();
         }
@@ -89,7 +89,7 @@ public class Controller {
     public String saleSearch(@QueryParam("prod-id") String productId) throws Exception {
         try {
             return (new JSONArray(SalesListService.getSalesListServiceInstance().showOneProductSale(Long.parseLong(productId)))).toString(INDENT_SIZE);
-        } catch (java.lang.NumberFormatException e) {
+        } catch (ProductNotFoundException | java.lang.NumberFormatException e) {
             return (new JSONObject()).toString();
 //            return Response.notAcceptable(new ArrayList<>()).build();
         }

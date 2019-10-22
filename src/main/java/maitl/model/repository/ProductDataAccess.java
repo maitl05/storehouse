@@ -3,13 +3,11 @@ package maitl.model.repository;
 
 import maitl.model.common.ConnectionPool;
 import maitl.model.entity.Product;
+import maitl.model.service.ProductNotFoundException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 
 public class ProductDataAccess implements AutoCloseable {
     private Connection connection;
@@ -53,8 +51,11 @@ public class ProductDataAccess implements AutoCloseable {
         preparedStatement = connection.prepareStatement("select * from product where product_id = ?");
         preparedStatement.setLong(1, productID);
         ResultSet resultSet = preparedStatement.executeQuery();
-        resultSet.next();
-        return one(resultSet).toString();
+        if (resultSet.next()) {
+            return one(resultSet).toString();
+        } else {
+            throw new ProductNotFoundException(productID);
+        }
     }
 
     private JSONObject one (ResultSet resultSet) throws Exception{
@@ -73,20 +74,26 @@ public class ProductDataAccess implements AutoCloseable {
             preparedStatement  = connection.prepareStatement("update product set price = ? where product_id=?");
             preparedStatement.setLong(1, product.getPrice());
             preparedStatement.setLong(2, product.getProductID());
-            preparedStatement.executeUpdate();
+            if (preparedStatement.executeUpdate() == 0){
+                throw new ProductNotFoundException(product.getProductID());
+            }
         }
         if (product.getProductQuantityAvailableInStore() != -1){
             preparedStatement = connection.prepareStatement("update product set product_quantity = ? where product_id = ?");
             preparedStatement.setLong(1,product.getProductQuantityAvailableInStore());
             preparedStatement.setLong(2, product.getProductID());
-            preparedStatement.executeUpdate();
+            if (preparedStatement.executeUpdate() == 0){
+                throw new ProductNotFoundException(product.getProductID());
+            }
         }
     }
 
-    public void deleteProduct(long productID)throws Exception{
+    public void deleteProduct(long productID) throws Exception{
         preparedStatement  = connection.prepareStatement("delete from product where product_id=?");
         preparedStatement.setLong(1,productID);
-        preparedStatement.executeUpdate();
+        if (preparedStatement.executeUpdate() == 0){
+            throw new ProductNotFoundException(productID);
+        }
     }
 
 
