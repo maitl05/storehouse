@@ -1,4 +1,4 @@
-package maitl.model.repository;
+package maitl.model.service;
 
 public class NotEnoughProductAvailableException extends Exception{
     public NotEnoughProductAvailableException(){

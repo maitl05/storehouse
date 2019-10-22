@@ -3,6 +3,7 @@ package maitl.model.repository;
 
 import maitl.model.common.ConnectionPool;
 import maitl.model.entity.Product;
+import maitl.model.service.ProductNotFoundException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

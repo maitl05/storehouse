@@ -2,7 +2,6 @@ package maitl.model.service;
 
 import maitl.model.entity.Product;
 import maitl.model.entity.SalesList;
-import maitl.model.repository.NotEnoughProductAvailableException;
 import maitl.model.repository.ProductDataAccess;
 import maitl.model.repository.SalesListDataAccess;
 
