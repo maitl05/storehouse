@@ -41,10 +41,15 @@ public class ProductDataAccess implements AutoCloseable {
         preparedStatement = connection.prepareStatement("select * from product");
         ResultSet resultSet = preparedStatement.executeQuery();
         JSONArray jsonArray = new JSONArray();
-        while (resultSet.next()) {
-            jsonArray.put(one(resultSet));
+        if (resultSet.next()){
+            do{
+                jsonArray.put(productResultSetToJSON(resultSet));
+            }while (resultSet.next());
+            return jsonArray.toString();
+        } else {
+            return null;
         }
-        return jsonArray.toString();
+
     }
 
     public String selectOneProduct(long productID) throws SQLException, JSONException{
@@ -52,13 +57,13 @@ public class ProductDataAccess implements AutoCloseable {
         preparedStatement.setLong(1, productID);
         ResultSet resultSet = preparedStatement.executeQuery();
         if (resultSet.next()) {
-            return one(resultSet).toString();
+            return productResultSetToJSON(resultSet).toString();
         } else {
             return null;
         }
     }
 
-    private JSONObject one (ResultSet resultSet) throws SQLException, JSONException {
+    private JSONObject productResultSetToJSON(ResultSet resultSet) throws SQLException, JSONException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("productID", resultSet.getString("product_id"));
         jsonObject.put("importDate", resultSet.getString("import_date"));
