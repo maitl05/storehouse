@@ -7,12 +7,6 @@ import maitl.model.repository.SalesListDataAccess;
 
 import org.json.JSONObject;
 
-class notEnoughProductAvailable extends Exception{
-    public notEnoughProductAvailable(){
-        super("not enough products available in storehouse");
-    }
-}
-
 public class SalesListService {
     private static SalesListService salesListService= new SalesListService();
     private SalesListService(){}
@@ -29,7 +23,7 @@ public class SalesListService {
             long productQuantity = Long.parseLong(jsonProduct.get("ProductQuantityAvailableInStore").toString());
 
             if(productQuantity < salesList.getSalesQuantity()){
-                throw new notEnoughProductAvailable();
+                throw new NotEnoughProductAvailableException();
             }
             Product product = new Product().setProductID(salesList.getProductID()).setProductQuantityAvailableInStore(productQuantity - salesList.getSalesQuantity());
             productDataAccess.updateProduct(product);
