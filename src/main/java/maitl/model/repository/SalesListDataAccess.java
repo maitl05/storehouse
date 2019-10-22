@@ -29,30 +29,30 @@ public class SalesListDataAccess implements AutoCloseable {
     public String selectAllSalesList () throws SQLException, JSONException {
         preparedStatement = connection.prepareStatement("select * from sales_list");
         ResultSet resultSet = preparedStatement.executeQuery();
-        JSONArray jsonArray = new JSONArray();
-        while (resultSet.next()) {
-            jsonArray.put(one(resultSet));
-        }
-        return jsonArray.toString();
+        return salesListResultSetToJSONString(resultSet);
     }
 
     public String selectOneProductFromSalesList (long productID) throws SQLException, JSONException{
         preparedStatement = connection.prepareStatement("select * from sales_list where product_id=?");
         preparedStatement.setLong(1,productID);
         ResultSet resultSet = preparedStatement.executeQuery();
-        JSONArray jsonArray = new JSONArray();
-        while (resultSet.next()) {
-            jsonArray.put(one(resultSet));
-        }
-        return jsonArray.toString();
+        return salesListResultSetToJSONString(resultSet);
     }
 
-    private JSONObject one (ResultSet resultSet) throws SQLException, JSONException {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("productID", resultSet.getString("product_id"));
-        jsonObject.put("salesDate", resultSet.getString("sales_date"));
-        jsonObject.put("salesQuantity", resultSet.getString("sales_quantity"));
-        return jsonObject;
+    private String salesListResultSetToJSONString(ResultSet resultSet) throws SQLException, JSONException {
+        if (resultSet.next()){
+            JSONArray jsonArray = new JSONArray();
+            do{
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("productID", resultSet.getString("product_id"));
+                jsonObject.put("salesDate", resultSet.getString("sales_date"));
+                jsonObject.put("salesQuantity", resultSet.getString("sales_quantity"));
+                jsonArray.put(jsonObject);
+            } while (resultSet.next());
+            return jsonArray.toString();
+        } else {
+            return null;
+        }
     }
 
     @Override
