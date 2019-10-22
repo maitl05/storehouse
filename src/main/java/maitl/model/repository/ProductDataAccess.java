@@ -4,6 +4,7 @@ package maitl.model.repository;
 import maitl.model.common.ConnectionPool;
 import maitl.model.entity.Product;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.sql.*;
@@ -12,13 +13,13 @@ public class ProductDataAccess implements AutoCloseable {
     private Connection connection;
     private PreparedStatement preparedStatement;
 
-    public ProductDataAccess() throws Exception{
+    public ProductDataAccess() throws SQLException{
         connection = ConnectionPool.getConnection();
         connection.setAutoCommit(false);
 
     }
 
-    public void insertProduct(Product product) throws Exception{
+    public void insertProduct(Product product) throws SQLException{
 //        preparedStatement = connection.prepareStatement("select product.nextval nid form dual");
 //        ResultSet resultSet = preparedStatement.executeQuery();
 //        resultSet.next();
@@ -36,7 +37,7 @@ public class ProductDataAccess implements AutoCloseable {
 
     }
 
-    public String selectAllProduct () throws Exception{
+    public String selectAllProduct () throws SQLException, JSONException{
         preparedStatement = connection.prepareStatement("select * from product");
         ResultSet resultSet = preparedStatement.executeQuery();
         JSONArray jsonArray = new JSONArray();
@@ -46,7 +47,7 @@ public class ProductDataAccess implements AutoCloseable {
         return jsonArray.toString();
     }
 
-    public String selectOneProduct(long productID) throws Exception{
+    public String selectOneProduct(long productID) throws SQLException, JSONException{
         preparedStatement = connection.prepareStatement("select * from product where product_id = ?");
         preparedStatement.setLong(1, productID);
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -57,7 +58,7 @@ public class ProductDataAccess implements AutoCloseable {
         }
     }
 
-    private JSONObject one (ResultSet resultSet) throws Exception{
+    private JSONObject one (ResultSet resultSet) throws SQLException, JSONException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("productID", resultSet.getString("product_id"));
         jsonObject.put("importDate", resultSet.getString("import_date"));
@@ -68,7 +69,7 @@ public class ProductDataAccess implements AutoCloseable {
         return jsonObject;
     }
 
-    public int updateProduct(Product product) throws Exception{
+    public int updateProduct(Product product) throws SQLException{
         int rowsAffected = 0;
         if (product.getPrice() != -1){
             preparedStatement  = connection.prepareStatement("update product set price = ? where product_id=?");
@@ -85,7 +86,7 @@ public class ProductDataAccess implements AutoCloseable {
         return rowsAffected;
     }
 
-    public int deleteProduct(long productID) throws Exception{
+    public int deleteProduct(long productID) throws SQLException{
         preparedStatement  = connection.prepareStatement("delete from product where product_id=?");
         preparedStatement.setLong(1,productID);
         return preparedStatement.executeUpdate();
@@ -93,7 +94,7 @@ public class ProductDataAccess implements AutoCloseable {
 
 
     @Override
-    public void close() throws Exception {
+    public void close() throws SQLException {
         connection.commit();
         preparedStatement.close();
         connection.close();

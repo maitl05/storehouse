@@ -5,7 +5,10 @@ import maitl.model.entity.SalesList;
 import maitl.model.repository.ProductDataAccess;
 import maitl.model.repository.SalesListDataAccess;
 
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.sql.SQLException;
 
 public class SalesListService {
     private static SalesListService salesListService= new SalesListService();
@@ -15,7 +18,7 @@ public class SalesListService {
         return salesListService;
     }
 
-    public void saveSale(SalesList salesList) throws Exception{
+    public void saveSale(SalesList salesList) throws SQLException, JSONException, ProductNotFoundException, NotEnoughProductAvailableException {
         try(SalesListDataAccess salesListDataAccess = new SalesListDataAccess(); ProductDataAccess productDataAccess = new ProductDataAccess())
         {
             String stringProduct = ProductService.getProductServiceInstance().showOneProduct(salesList.getProductID());
@@ -31,13 +34,13 @@ public class SalesListService {
         }
     }
 
-    public String showAllSale()throws Exception{
+    public String showAllSale()throws SQLException, JSONException{
         try(SalesListDataAccess salesListDataAccess = new SalesListDataAccess()){
             return salesListDataAccess.selectAllSalesList();
         }
     }
 
-    public  String showOneProductSale(long productID) throws Exception{
+    public  String showOneProductSale(long productID) throws SQLException, JSONException {
         try(SalesListDataAccess salesListDataAccess = new SalesListDataAccess()){
             return salesListDataAccess.selectOneProductFromSalesList(productID);
         }
