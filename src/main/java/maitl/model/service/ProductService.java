@@ -13,18 +13,15 @@ public class ProductService {
     private ProductService(){
 
     }
-
     public static ProductService getProductServiceInstance(){
         return productService;
     }
-
     public void saveProduct(Product product) throws SQLException {
         try (ProductDataAccess productDataAccess = new ProductDataAccess()){
             productDataAccess.insertProduct(product);
         }
 
     }
-
     public void changeProductPrice(Product product) throws SQLException, ProductNotFoundException{
         try(ProductDataAccess productDataAccess = new ProductDataAccess()){
             if (productDataAccess.updateProduct(product) == 0){
@@ -32,7 +29,6 @@ public class ProductService {
             }
         }
     }
-
     public void changeProductQuantity(Product product) throws SQLException, ProductNotFoundException{
         try(ProductDataAccess productDataAccess = new ProductDataAccess()){
             if (productDataAccess.updateProduct(product) == 0){
@@ -40,7 +36,6 @@ public class ProductService {
             }
         }
     }
-
     public void deleteProduct(long productID) throws SQLException, ProductNotFoundException {
         try (ProductDataAccess productDataAccess = new ProductDataAccess()) {
             if (productDataAccess.deleteProduct(productID) == 0){
@@ -68,8 +63,4 @@ public class ProductService {
             }
         }
     }
-
-
-
-
 }
