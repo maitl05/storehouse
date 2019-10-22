@@ -4,6 +4,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Locale;
 
 public class ConnectionPool {
     private static BasicDataSource basicDataSource = new BasicDataSource();
@@ -16,6 +17,7 @@ public class ConnectionPool {
 
     }
     public static Connection getConnection() throws SQLException{
+        Locale.setDefault(Locale.US);
         return basicDataSource.getConnection();
     }
 }
