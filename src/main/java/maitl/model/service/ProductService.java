@@ -24,21 +24,25 @@ public class ProductService {
 
     public void changeProductPrice(Product product) throws Exception{
         try(ProductDataAccess productDataAccess = new ProductDataAccess()){
-            productDataAccess.updateProduct(product);
-
+            if (productDataAccess.updateProduct(product) == 0){
+                throw new ProductNotFoundException(product.getProductID());
+            }
         }
     }
 
     public void changeProductQuantity(Product product) throws Exception{
         try(ProductDataAccess productDataAccess = new ProductDataAccess()){
-            productDataAccess.updateProduct(product);
-
+            if (productDataAccess.updateProduct(product) == 0){
+                throw new ProductNotFoundException(product.getProductID());
+            }
         }
     }
 
     public void deleteProduct(long productID) throws Exception {
         try (ProductDataAccess productDataAccess = new ProductDataAccess()) {
-            productDataAccess.deleteProduct(productID);
+            if (productDataAccess.deleteProduct(productID) == 0){
+                throw new ProductNotFoundException(productID);
+            }
         }
     }
     public String showAllProduct( ) throws Exception {
@@ -49,7 +53,12 @@ public class ProductService {
     }
     public String showOneProduct(long productID ) throws Exception {
         try (ProductDataAccess productDataAccess = new ProductDataAccess()) {
-            return productDataAccess.selectOneProduct(productID);
+            String res = productDataAccess.selectOneProduct(productID);
+            if (res == null){
+                throw new ProductNotFoundException(productID);
+            } else {
+                return res;
+            }
         }
     }
 
