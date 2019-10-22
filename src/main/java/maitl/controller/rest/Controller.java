@@ -4,6 +4,7 @@ import maitl.model.entity.Product;
 import maitl.model.entity.SalesList;
 import maitl.model.service.*;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.ws.rs.GET;
@@ -12,16 +13,16 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
-//TODO add product not found exception to everything
 @Path("/api")
 public class Controller {
     final static int INDENT_SIZE = 4;
     @GET
     @Path("prod-add")
     @Produces({MediaType.TEXT_HTML})
-    public Response productAdd(@QueryParam("id") String productId, @QueryParam("name") String productName, @QueryParam("category") String productCategory, @QueryParam("quantity") String productQuantity, @QueryParam("price") String productPrice) throws Exception {
+    public Response productAdd(@QueryParam("id") String productId, @QueryParam("name") String productName, @QueryParam("category") String productCategory, @QueryParam("quantity") String productQuantity, @QueryParam("price") String productPrice){
         try {
             ProductService.getProductServiceInstance().saveProduct(new Product()
                     .setProductID(Long.parseLong(productId))
@@ -30,68 +31,96 @@ public class Controller {
                     .setProductQuantityAvailableInStore(Long.parseLong(productQuantity))
                     .setPrice(Long.parseLong(productPrice))
             );
-            return Response.ok().build();
+            return Response.ok().entity("200").build();
         } catch (java.lang.NumberFormatException e) {
             return Response.notAcceptable(new ArrayList<>()).build();
+        } catch (SQLException e){
+            return Response.serverError().build();
         }
     }
     @GET
     @Path("prod-remove")
     @Produces({MediaType.TEXT_HTML})
-    public Response productRemove(@QueryParam("prod-id") String productId) throws Exception {
+    public Response productRemove(@QueryParam("prod-id") String productId){
         try {
             ProductService.getProductServiceInstance().deleteProduct(Long.parseLong(productId));
-            return Response.ok().build();
-        } catch (ProductNotFoundException | java.lang.NumberFormatException e) {
+            return Response.ok().entity("200").build();
+        } catch (java.lang.NumberFormatException e) {
             return Response.notAcceptable(new ArrayList<>()).build();
+        } catch (ProductNotFoundException e){
+            return Response.status(404).build();
+        } catch (SQLException e){
+            return Response.serverError().build();
         }
     }
     @GET
     @Path("prod-search")
     @Produces({MediaType.APPLICATION_JSON})
-    public String productSearch() throws Exception {
-        return (new JSONArray(ProductService.getProductServiceInstance().showAllProduct())).toString(INDENT_SIZE);
+    public Response productSearch() {
+        try {
+            return Response.ok().entity((new JSONArray(ProductService.getProductServiceInstance().showAllProduct())).toString(INDENT_SIZE)).build();
+        } catch (ProductNotFoundException e){
+            return Response.status(404).build();
+        } catch (SQLException | JSONException e){
+            return Response.serverError().build();
+        }
     }
     @GET
     @Path("prod-search-by-id")
     @Produces({MediaType.APPLICATION_JSON})
-    public String productSearch(@QueryParam("prod-id") String productId) throws Exception {
+    public Response productSearch(@QueryParam("prod-id") String productId){
         try {
-            return (new JSONObject(ProductService.getProductServiceInstance().showOneProduct(Long.parseLong(productId)))).toString(INDENT_SIZE);
-        } catch (ProductNotFoundException | java.lang.NumberFormatException e) {
-            return (new JSONObject()).toString();
-//            return Response.notAcceptable(new ArrayList<>()).build();
+            return Response.ok().entity((new JSONObject(ProductService.getProductServiceInstance().showOneProduct(Long.parseLong(productId)))).toString(INDENT_SIZE)).build();
+        } catch (java.lang.NumberFormatException e) {
+            return Response.notAcceptable(new ArrayList<>()).build();
+        } catch (ProductNotFoundException e){
+            return Response.status(404).build();
+        } catch (SQLException | JSONException e){
+            return Response.serverError().build();
         }
     }
     @GET
     @Path("sale-add")
     @Produces({MediaType.TEXT_HTML})
-    public Response saleAdd(@QueryParam("prod-id") String productId, @QueryParam("quantity") String saleQuantity) throws Exception {
+    public Response saleAdd(@QueryParam("prod-id") String productId, @QueryParam("quantity") String saleQuantity){
         try {
             SalesListService.getSalesListServiceInstance().saveSale(new SalesList()
                     .setProductID(Long.parseLong(productId))
                     .setSalesQuantity(Long.parseLong(saleQuantity))
             );
-            return Response.ok().build();
+            return Response.ok().entity("200").build();
         } catch (NotEnoughProductAvailableException | java.lang.NumberFormatException e) {
             return Response.notAcceptable(new ArrayList<>()).build();
+        }catch (ProductNotFoundException e){
+            return Response.status(404).build();
+        } catch (SQLException | JSONException e){
+            return Response.serverError().build();
         }
     }
     @GET
     @Path("sale-search")
     @Produces({MediaType.APPLICATION_JSON})
-    public String saleSearch() throws Exception{
-        return new JSONArray(SalesListService.getSalesListServiceInstance().showAllSale()).toString(INDENT_SIZE);
+    public Response saleSearch(){
+        try {
+            return Response.ok().entity(new JSONArray(SalesListService.getSalesListServiceInstance().showAllSale()).toString(INDENT_SIZE)).build();
+        }catch (SaleListNotFound e){
+            return Response.status(404).build();
+        } catch (SQLException | JSONException e){
+            return Response.serverError().build();
+        }
     }
     @GET
     @Path("sale-search-by-product")
     @Produces({MediaType.APPLICATION_JSON})
-    public String saleSearch(@QueryParam("prod-id") String productId) throws Exception {
+    public Response saleSearch(@QueryParam("prod-id") String productId){
         try {
-            return (new JSONArray(SalesListService.getSalesListServiceInstance().showOneProductSale(Long.parseLong(productId)))).toString(INDENT_SIZE);
-        } catch (ProductNotFoundException | java.lang.NumberFormatException e) {
-            return (new JSONObject()).toString();
-//            return Response.notAcceptable(new ArrayList<>()).build();
+            return Response.ok().entity((new JSONArray(SalesListService.getSalesListServiceInstance().showOneProductSale(Long.parseLong(productId)))).toString(INDENT_SIZE)).build();
+        } catch (java.lang.NumberFormatException e) {
+            return Response.notAcceptable(new ArrayList<>()).build();
+        }catch (SaleListNotFound e){
+            return Response.status(404).build();
+        } catch (SQLException | JSONException e){
+            return Response.serverError().build();
         }
     }
 }
