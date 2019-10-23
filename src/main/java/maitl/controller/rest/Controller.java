@@ -39,10 +39,10 @@ public class Controller {
             return Response.serverError().build();
         }
     }
-    @GET
-    @Path("prod-remove")
+    @DELETE
+    @Path("{prod-id}")
     @Produces({MediaType.TEXT_HTML})
-    public Response productRemove(@QueryParam("prod-id") String productId){
+    public Response productRemove(@PathParam("prod-id") String productId){
         try {
             ProductService.getProductServiceInstance().deleteProduct(Long.parseLong(productId));
             return Response.ok().entity("200").build();
