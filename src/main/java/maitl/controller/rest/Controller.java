@@ -33,7 +33,7 @@ public class Controller {
             );
             return Response.ok().entity("200").build();
         } catch (java.lang.NumberFormatException e) {
-            return Response.notAcceptable(new ArrayList<>()).build();
+            return Response.status(422).build();
         } catch (SQLException e){
             return Response.serverError().build();
         }
@@ -46,7 +46,7 @@ public class Controller {
             ProductService.getProductServiceInstance().deleteProduct(Long.parseLong(productId));
             return Response.ok().entity("200").build();
         } catch (java.lang.NumberFormatException e) {
-            return Response.notAcceptable(new ArrayList<>()).build();
+            return Response.status(422).build();
         } catch (ProductNotFoundException e){
             return Response.status(404).build();
         } catch (SQLException e){
@@ -72,7 +72,7 @@ public class Controller {
         try {
             return Response.ok().entity((new JSONObject(ProductService.getProductServiceInstance().showOneProduct(Long.parseLong(productId)))).toString(INDENT_SIZE)).build();
         } catch (java.lang.NumberFormatException e) {
-            return Response.notAcceptable(new ArrayList<>()).build();
+            return Response.status(422).build();
         } catch (ProductNotFoundException e){
             return Response.status(404).build();
         } catch (SQLException | JSONException e){
@@ -90,7 +90,7 @@ public class Controller {
             );
             return Response.ok().entity("200").build();
         } catch (NotEnoughProductAvailableException | java.lang.NumberFormatException e) {
-            return Response.notAcceptable(new ArrayList<>()).build();
+            return Response.status(422).build();
         }catch (ProductNotFoundException e){
             return Response.status(404).build();
         } catch (SQLException | JSONException e){
@@ -116,7 +116,7 @@ public class Controller {
         try {
             return Response.ok().entity((new JSONArray(SalesListService.getSalesListServiceInstance().showOneProductSale(Long.parseLong(productId)))).toString(INDENT_SIZE)).build();
         } catch (java.lang.NumberFormatException e) {
-            return Response.notAcceptable(new ArrayList<>()).build();
+            return Response.status(422).build();
         }catch (SaleListNotFound e){
             return Response.status(404).build();
         } catch (SQLException | JSONException e){
