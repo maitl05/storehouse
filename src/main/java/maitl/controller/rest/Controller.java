@@ -89,10 +89,10 @@ public class Controller {
             return HTTPResponses.handleException(e);
         }
     }
-    @DELETE
-    @Path("{prod-id}")
+    @POST
+    @Path("prod-remove")
     @Produces({MediaType.TEXT_HTML})
-    public Response productRemove(@PathParam("prod-id") String productId){
+    public Response productRemove(@FormParam("prod-id") String productId){
         try {
             ProductService.getProductServiceInstance().deleteProduct(Long.parseLong(productId));
             return HTTPResponses.ok();
