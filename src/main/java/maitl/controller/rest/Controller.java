@@ -16,6 +16,58 @@ import java.sql.SQLException;
 @Path("/api")
 public class Controller {
     final static int INDENT_SIZE = 4;
+    private final static class HTTPResponses{
+        private static Response unprocessableEntity(){
+            return Response.status(422).entity(
+                    "422: Unprocessable Entity (invalid data entered)"
+            ).build();
+        }
+        private static Response SQLException(){
+            return Response.serverError().entity(
+                    "SQLException: Something is wrong with the database"
+            ).build();
+        }
+        private static Response ok(){
+            return Response.ok().entity(
+                    "200: Everything is ok"
+            ).build();
+        }
+        private static Response ok(Object response){
+            return Response.ok().entity(response).build();
+        }
+        private static Response notFound(){
+            return Response.status(404).entity(
+                    "404: Not Found"
+            ).build();
+        }
+        private static Response JSONException(){
+            return Response.serverError().entity(
+                    "JSONException: Something is wrong with server or database"
+            ).build();
+        }
+        private static Response badRequest(){
+            return Response.status(400).entity(
+                    "400: Bad Request"
+            ).build();
+        }
+        private static Response handleException(Exception e){
+            if (e instanceof java.lang.NumberFormatException){
+                return unprocessableEntity();
+            } else if (e instanceof SQLException){
+                return SQLException();
+            } else if (e instanceof JSONException){
+                return JSONException();
+            } else if (e instanceof ProductNotFoundException){
+                return notFound();
+            } else if (e instanceof SaleListNotFound){
+                return notFound();
+            } else if (e instanceof NotEnoughProductAvailableException){
+                return badRequest();
+            } else {
+                return null;
+            }
+        }
+    }
     @POST
     @Path("prod-add")
     @Produces({MediaType.TEXT_HTML})
@@ -32,11 +84,9 @@ public class Controller {
                     .setProductQuantityAvailableInStore(Long.parseLong(productQuantity))
                     .setPrice(Long.parseLong(productPrice))
             );
-            return Response.ok().entity("200").build();
-        } catch (java.lang.NumberFormatException e) {
-            return Response.status(422).build();
-        } catch (SQLException e){
-            return Response.serverError().build();
+            return HTTPResponses.ok();
+        } catch (Exception e) {
+            return HTTPResponses.handleException(e);
         }
     }
     @DELETE
@@ -45,13 +95,9 @@ public class Controller {
     public Response productRemove(@PathParam("prod-id") String productId){
         try {
             ProductService.getProductServiceInstance().deleteProduct(Long.parseLong(productId));
-            return Response.ok().entity("200").build();
-        } catch (java.lang.NumberFormatException e) {
-            return Response.status(422).build();
-        } catch (ProductNotFoundException e){
-            return Response.status(404).build();
-        } catch (SQLException e){
-            return Response.serverError().build();
+            return HTTPResponses.ok();
+        } catch (Exception e) {
+            return HTTPResponses.handleException(e);
         }
     }
     @GET
@@ -59,11 +105,13 @@ public class Controller {
     @Produces({MediaType.APPLICATION_JSON})
     public Response productSearch() {
         try {
-            return Response.ok().entity((new JSONArray(ProductService.getProductServiceInstance().showAllProduct())).toString(INDENT_SIZE)).build();
-        } catch (ProductNotFoundException e){
-            return Response.status(404).build();
-        } catch (SQLException | JSONException e){
-            return Response.serverError().build();
+            return HTTPResponses.ok(
+                    (new JSONArray(
+                            ProductService.getProductServiceInstance()
+                                    .showAllProduct())
+                    ).toString(INDENT_SIZE));
+        } catch (Exception e){
+            return HTTPResponses.handleException(e);
         }
     }
     @GET
@@ -71,13 +119,13 @@ public class Controller {
     @Produces({MediaType.APPLICATION_JSON})
     public Response productSearch(@QueryParam("prod-id") String productId){
         try {
-            return Response.ok().entity((new JSONObject(ProductService.getProductServiceInstance().showOneProduct(Long.parseLong(productId)))).toString(INDENT_SIZE)).build();
-        } catch (java.lang.NumberFormatException e) {
-            return Response.status(422).build();
-        } catch (ProductNotFoundException e){
-            return Response.status(404).build();
-        } catch (SQLException | JSONException e){
-            return Response.serverError().build();
+            return HTTPResponses.ok(
+                    (new JSONObject(
+                            ProductService.getProductServiceInstance()
+                                    .showOneProduct(Long.parseLong(productId)))
+                    ).toString(INDENT_SIZE));
+        } catch (Exception e) {
+            return HTTPResponses.handleException(e);
         }
     }
     @POST
@@ -90,13 +138,9 @@ public class Controller {
                     .setProductID(Long.parseLong(productId))
                     .setSalesQuantity(Long.parseLong(saleQuantity))
             );
-            return Response.ok().entity("200").build();
-        } catch (NotEnoughProductAvailableException | java.lang.NumberFormatException e) {
-            return Response.status(422).build();
-        }catch (ProductNotFoundException e){
-            return Response.status(404).build();
-        } catch (SQLException | JSONException e){
-            return Response.serverError().build();
+            return HTTPResponses.ok();
+        } catch (Exception e) {
+            return HTTPResponses.handleException(e);
         }
     }
     @GET
@@ -104,15 +148,14 @@ public class Controller {
     @Produces({MediaType.APPLICATION_JSON})
     public Response saleSearch(){
         try {
-            return Response.ok().entity(
+            return HTTPResponses.ok(
                     new JSONArray(
-                            SalesListService.getSalesListServiceInstance().showAllSale()
+                            SalesListService.getSalesListServiceInstance()
+                                    .showAllSale()
                     ).toString(INDENT_SIZE)
-            ).build();
-        }catch (SaleListNotFound e){
-            return Response.status(404).build();
-        } catch (SQLException | JSONException e){
-            return Response.serverError().build();
+            );
+        }catch (Exception e) {
+            return HTTPResponses.handleException(e);
         }
     }
     @GET
@@ -120,13 +163,13 @@ public class Controller {
     @Produces({MediaType.APPLICATION_JSON})
     public Response saleSearch(@QueryParam("prod-id") String productId){
         try {
-            return Response.ok().entity((new JSONArray(SalesListService.getSalesListServiceInstance().showOneProductSale(Long.parseLong(productId)))).toString(INDENT_SIZE)).build();
-        } catch (java.lang.NumberFormatException e) {
-            return Response.status(422).build();
-        }catch (SaleListNotFound e){
-            return Response.status(404).build();
-        } catch (SQLException | JSONException e){
-            return Response.serverError().build();
+            return HTTPResponses.ok(
+                    (new JSONArray(
+                            SalesListService.getSalesListServiceInstance()
+                                    .showOneProductSale(Long.parseLong(productId)))
+                    ).toString(INDENT_SIZE));
+        } catch (Exception e) {
+            return HTTPResponses.handleException(e);
         }
     }
 }
