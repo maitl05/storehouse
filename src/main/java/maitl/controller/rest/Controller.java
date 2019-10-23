@@ -104,7 +104,11 @@ public class Controller {
     @Produces({MediaType.APPLICATION_JSON})
     public Response saleSearch(){
         try {
-            return Response.ok().entity(new JSONArray(SalesListService.getSalesListServiceInstance().showAllSale()).toString(INDENT_SIZE)).build();
+            return Response.ok().entity(
+                    new JSONArray(
+                            SalesListService.getSalesListServiceInstance().showAllSale()
+                    ).toString(INDENT_SIZE)
+            ).build();
         }catch (SaleListNotFound e){
             return Response.status(404).build();
         } catch (SQLException | JSONException e){
