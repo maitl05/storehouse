@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+  
+  <h1>
+  The storehouse managment page
+  </h1>
+  
+  <br/>
+  
+   <form action="http://localhost:8080/storehouse/api/prod-add" method="get">
+       <input type="text" name="id" placeholder="ID"/>
+       <input type="text" name="name" placeholder="Name"/>
+       <br/>
+       <input type="text" name="category" placeholder="Category"/>
+       <input type="text" name="quantity" placeholder="Quantity"/>
+       <input type="text" name="price" placeholder="Price"/>
+       <br/>
+       <input type="submit" value="Add product"/>
+       
+   </form>
+   
+   <br/><br/>
+    
+    <form action="http://localhost:8080/storehouse/api/sale-add" method="get">
+       <input type="text" name="prod-id" placeholder="Product ID"/>
+       <input type="text" name="quantity" placeholder="Quantity"/>
+        <br/>
+       <input type="submit" value="Make a sale"/>
+        
+    </form>
+   
+   <br/><br/>
+   
+   <form action="http://localhost:8080/storehouse/api/prod-remove" method="get">
+      <input type="text" name="prod-id" placeholder="Product ID"/>
+      <input type="submit" value="Remove product" placeholder="Product ID"/>
+   </form>
+    
+    <br/><br/>
+    
+    <form action="http://localhost:8080/storehouse/api/prod-search-by-id" method="get">
+       <input type="text" name="prod-id" placeholder="Product ID"/>
+       <input type="submit" value="Search product"/>
+        
+    </form>
+    
+    <br/><br/>
+    
+    <form action="http://localhost:8080/storehouse/api/sale-search-by-product" method="get">
+       <input type="text" name="prod-id" placeholder="Product ID"/>
+       <input type="submit" value="Search product in sale"/>
+        
+    </form>
+    
+    <br/><br/>
+    
+    <table>
+        <tr>
+            <td>
+                <form action="http://localhost:8080/storehouse/api/prod-search" method="get"><button>Show all products</button></form>
+            </td>
+            <td>
+                <form action="http://localhost:8080/storehouse/api/sale-search" method="get"><button>Show all sales</button></form>
+            </td>
+        </tr>
+    </table>
+    
+</body>
+</html>
