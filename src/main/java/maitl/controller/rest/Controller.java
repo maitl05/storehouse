@@ -7,22 +7,23 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
-import java.util.ArrayList;
+
 
 @Path("/api")
 public class Controller {
     final static int INDENT_SIZE = 4;
-    @GET
+    @POST
     @Path("prod-add")
     @Produces({MediaType.TEXT_HTML})
-    public Response productAdd(@QueryParam("id") String productId, @QueryParam("name") String productName, @QueryParam("category") String productCategory, @QueryParam("quantity") String productQuantity, @QueryParam("price") String productPrice){
+    public Response productAdd(@FormParam("id") String productId,
+                               @FormParam("name") String productName,
+                               @FormParam("category") String productCategory,
+                               @FormParam("quantity") String productQuantity,
+                               @FormParam("price") String productPrice){
         try {
             ProductService.getProductServiceInstance().saveProduct(new Product()
                     .setProductID(Long.parseLong(productId))
