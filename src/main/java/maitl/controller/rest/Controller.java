@@ -80,10 +80,11 @@ public class Controller {
             return Response.serverError().build();
         }
     }
-    @GET
+    @POST
     @Path("sale-add")
     @Produces({MediaType.TEXT_HTML})
-    public Response saleAdd(@QueryParam("prod-id") String productId, @QueryParam("quantity") String saleQuantity){
+    public Response saleAdd(@FormParam("prod-id") String productId,
+                            @FormParam("quantity") String saleQuantity){
         try {
             SalesListService.getSalesListServiceInstance().saveSale(new SalesList()
                     .setProductID(Long.parseLong(productId))
